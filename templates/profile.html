@@ -3,59 +3,83 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-
- 
-  <header class="profile-header">
-    <h1>Profile Dashboard</h1>
-  </header>
-  
-  <section class="profile-dashboard">
-    <div class="stats">
-      <div>
-        <h3>Quizzes Taken</h3>
-        <p>{{ quizzes_taken }}</p>
-      </div>
-      <div>
-        <h3>Achievements</h3>
-        <p>{{ achievements }}</p>
-      </div>
-    </div>
-    <div class="chart">
-      <canvas id="profileChart"></canvas>
-    </div>
-  </section>
-
- 
-  <section class="previous-scores">
-    <h3>Your Previous Scores:</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Score</th>
-          <th>Date Taken</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for prev_score in previous_scores %}
-          <tr>
-            <td>{{ prev_score[0] }} / 3</td>
-            <td>{{ prev_score[1] }}</td>
-          </tr>
-        {% else %}
-          <tr>
-            <td colspan="2">No previous scores</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-   
-  </section>
-
- 
-  <div class="buttons">
-    <a href="quizzes.html">Try Another Quiz</a>
-    <a href="leaderboard.html">View Leaderboard</a>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Dashboard</h2>
+    <a href="#" data-section="dashboard">Dashboard</a>
+    <a href="#" data-section="previous-scores">Previous Scores</a>
+    <a href="#" data-section="update-profile">Update Profile</a>
   </div>
 
-  
-{% endblock %}
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="section active">
+      <header class="profile-header">
+        <h1>Profile Dashboard</h1>
+      </header>
+      <div class="profile-dashboard">
+        <div class="stats">
+          <div>
+            <h3>Quizzes Taken</h3>
+            <p>{{ quizzes_taken }}</p>
+          </div>
+          <div>
+            <h3>Achievements</h3>
+            <p>{{ achievements }}</p>
+          </div>
+        </div>
+        <div class="chart">
+          <canvas id="profileChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Previous Scores Section -->
+    <section id="previous-scores" class="section">
+      <h3>Previous Scores</h3>
+      <div class="previous-scores">
+        <table>
+          <thead>
+            <tr>
+              <th>Score</th>
+              <th>Date Taken</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for prev_score in previous_scores %}
+              <tr>
+                <td>{{ prev_score[0] }} / 3</td>
+                <td>{{ prev_score[1] }}</td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="2">No previous scores</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Update Profile Section -->
+    <section id="update-profile" class="section">
+      <h3>Update Profile</h3>
+      <div class="update-profile">
+        <form action="{{ url_for('update_profile') }}" method="POST">
+          <div>
+            <label for="username">New Username:</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          <div>
+            <label for="password">New Password:</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <button type="submit">Update</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+ <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  {% endblock %}

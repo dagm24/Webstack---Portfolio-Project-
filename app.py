@@ -9,6 +9,7 @@ app.secret_key = 'your_secret_key'
 
 # Initialize the SQLite database
 
+
 def init_db():
     with sqlite3.connect('db.sqlite3') as conn:
         cursor = conn.cursor()
@@ -226,12 +227,29 @@ def profile():
     quizzes_taken = len(previous_scores)  # Example calculation
     achievements = 5  # This could be fetched from another table or calculated
 
-    return render_template('profile.html', 
-                           previous_scores=previous_scores, 
-                           quizzes_taken=quizzes_taken, 
-                           achievements=achievements)
+    
 
+    return render_template('profile.html', previous_scores=previous_scores, quizzes_taken=quizzes_taken, achievements=achievements)
 
+@app.route('/update_profile', methods=['POST'])
+def update_profile():
+    if 'username' not in session:
+        flash('Please log in to update your profile.', 'warning')
+        return redirect(url_for('login'))
+
+    new_username = request.form['username']
+    new_password = request.form['password']
+    hashed_password = generate_password_hash(new_password)
+
+    with sqlite3.connect('db.sqlite3') as conn:
+        cursor = conn.cursor()
+        cursor.execute('UPDATE users SET username = ?, password = ? WHERE username = ?', (new_username, hashed_password, session['username']))
+        cursor.execute('UPDATE results SET username = ? WHERE username = ?', (new_username, session['username']))
+        conn.commit()
+
+    session['username'] = new_username
+    flash('Profile updated successfully!', 'success')
+    return redirect(url_for('profile'))
 @app.route('/test')
 def test():
     return "Test route is working!"
