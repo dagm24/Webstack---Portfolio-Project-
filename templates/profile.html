@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+ 
+  <header class="profile-header">
+    <h1>Profile Dashboard</h1>
+  </header>
+  
+  <section class="profile-dashboard">
+    <div class="stats">
+      <div>
+        <h3>Quizzes Taken</h3>
+        <p>{{ quizzes_taken }}</p>
+      </div>
+      <div>
+        <h3>Achievements</h3>
+        <p>{{ achievements }}</p>
+      </div>
+    </div>
+    <div class="chart">
+      <canvas id="profileChart"></canvas>
+    </div>
+  </section>
+
+ 
+  <section class="previous-scores">
+    <h3>Your Previous Scores:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Score</th>
+          <th>Date Taken</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prev_score in previous_scores %}
+          <tr>
+            <td>{{ prev_score[0] }} / 3</td>
+            <td>{{ prev_score[1] }}</td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="2">No previous scores</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+   
+  </section>
+
+ 
+  <div class="buttons">
+    <a href="quizzes.html">Try Another Quiz</a>
+    <a href="leaderboard.html">View Leaderboard</a>
+  </div>
+
+  
+{% endblock %}

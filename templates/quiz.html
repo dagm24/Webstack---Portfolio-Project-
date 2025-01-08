@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+   
+    <form action="{{ url_for('quiz') }}" method="POST">
+        <div class="quiz-container">
+            <div class="quiz-header">Quiz Time</div>
+            <label for="username">Name:</label>
+            <input type="text" id="username" name="username" value="{{ username }}" readonly><br><br>
+            <!-- Question 1 -->
+            <div class="quiz-question" id="question1">
+                <label for="q1">1. What is 2 + 2?</label><br>
+                <input type="radio" id="q1a" name="q1" value="a"> 3<br>
+                <input type="radio" id="q1b" name="q1" value="b"> 4<br>
+                <input type="radio" id="q1c" name="q1" value="c"> 5<br><br>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="quiz-question" id="question2" style="display: none;">
+                <label for="q2">2. What is the capital of France?</label><br>
+                <input type="radio" id="q2a" name="q2" value="a"> Paris<br>
+                <input type="radio" id="q2b" name="q2" value="b"> London<br>
+                <input type="radio" id="q2c" name="q2" value="c"> Berlin<br><br>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="quiz-question" id="question3" style="display: none;">
+                <label for="q3">3. Which is the largest planet?</label><br>
+                <input type="radio" id="q3a" name="q3" value="a"> Earth<br>
+                <input type="radio" id="q3b" name="q3" value="b"> Mars<br>
+                <input type="radio" id="q3c" name="q3" value="c"> Jupiter<br><br>
+            </div>
+
+            <div class="button-container">
+                <button type="button" class="next-btn" id="nextBtn" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 3;
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.getElementById('question' + currentQuestion).style.display = 'none';
+                currentQuestion++;
+                document.getElementById('question' + currentQuestion).style.display = 'block';
+            } else {
+                document.querySelector('form').submit();
+            }
+        }
+    </script>
+    <a href="{{ url_for('quiz') }}" class="quiz-link">Take the quiz again</a>
+{% endblock %}

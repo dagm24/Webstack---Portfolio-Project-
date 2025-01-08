@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+ 
+  <header class="quiz-header">
+    <h1>Quiz Results</h1>
+    <p>Here's how you performed in the quiz!</p>
+  </header>
+
+  
+  <div class="container">
+    <section class="results-section">
+      <h2>Your Performance Summary</h2>
+      <div class="results-summary">
+        <div>
+          <h3>Total Questions</h3>
+          <p>3</p>
+        </div>
+        <div>
+          <h3>Correct Answers</h3>
+          <p>{{score}}</p>
+        </div>
+        <div>
+          <h3>Score</h3>
+          <p>80%</p>
+        </div>
+        <div>
+          <h3>Time Taken</h3>
+          <p>5m 30s</p>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="badges">
+      <h2>Achievements</h2>
+      <div class="badge">Great Job!</div>
+      <div class="badge">Top Performer!</div>
+      <div class="badge">Quick Thinker!</div>
+    </section>
+
+    
+    <section class="chart-container">
+      <h2>Performance Chart</h2>
+      <canvas id="resultsChart"></canvas>
+    </section>
+
+    
+    <div class="buttons">
+    <a href="{{ url_for('leaderboard') }}">View Leaderboard</a>
+    <a href="{{ url_for('quiz') }}">Take the Quiz</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Chart.js for Performance Chart
+    const ctx = document.getElementById('resultsChart').getContext('2d');
+    const resultsChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Correct', 'Incorrect'],
+        datasets: [{
+          data: [8, 2], // Example data: 8 correct, 2 incorrect
+          backgroundColor: ['#6c63ff', '#ff6584'],
+          borderWidth: 1,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+          },
+        },
+      }
+    });
+  </script>
+{% endblock %}

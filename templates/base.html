@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Flask App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <h1>QuizPro</h1>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('quiz') }}">Quizzes</a></li>
+                <li><a href="{{ url_for('leaderboard') }}">Leaderboard</a></li>
+            </ul>
+            {% if 'username' not in session %}
+                <a href="{{ url_for('login') }}" class="login">Login</a>
+            {% else %}
+
+                <a href="{{ url_for('logout') }}" class="cta">Logout</a>
+                <a href="{{ url_for('register') }}" class="cta">SignUp</a>
+                <div class="profile">
+                    <a href="{{ url_for('profile') }}">
+                        <img src="../static/images/profile-icon.png" alt="Profile Image">
+                    </a>
+                    <span>{{ session['username'] }}</span>
+                </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <ul>
+            <li>Privacy Policy</li>
+            <li>Terms of Service</li>
+            <li>Contact</li>
+        </ul>
+        <p>&copy; 2023 QuizPro. All rights reserved.</p>
+    </footer>
+</body>
+</html>

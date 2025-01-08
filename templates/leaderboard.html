@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+ 
+    
+    <section class="leaderboard">
+      <h2>Leaderboard</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for index, name, score in leaderboard %}
+            <tr>
+                <td>{{ index }}</td>
+                <td>{{ name }}</td>
+                <td>{{ score }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    
+    <div class="buttons">
+      <a href="quizzes.html">Try Another Quiz</a>
+    </div>
+
+  </div>
+  {% endblock %}
+
