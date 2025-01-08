@@ -4,15 +4,15 @@ This is a simple quiz application built with Flask. The application allows users
 
 ## Project Structure
 
-app.py
+  app.py
 
-db.sqlite3
+  db.sqlite3
 
-README.md
+  README.md
 
-requirements.txt
+  requirements.txt
 
-static/ 
+  static/ 
     
     css/
 
@@ -21,7 +21,7 @@ static/
 
        script.js 
 
-templates/ 
+  templates/ 
    
     base.html 
     home.html 
@@ -31,7 +31,7 @@ templates/
     quiz.html 
     register.html 
     results.html 
-venv/ 
+  venv/ 
 
     bin/ 
     include/ 
@@ -87,7 +87,6 @@ venv/
     http://127.0.0.1:5000
     ```
 
-    ```
 
 ## Features
 
